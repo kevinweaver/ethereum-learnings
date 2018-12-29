@@ -6,7 +6,7 @@ pragma solidity ^0.4.22;
 contract owned {
   address owner;
 
-  constructor() {
+  constructor() public {
     owner = msg.sender;
   }
 
@@ -33,15 +33,15 @@ contract Faucet is mortal {
   function withdraw(uint withdraw_amount) public {
     // Limit withdrawal amount
     require(withdraw_amount <= 0.1 ether);
-    require(this.balance >= withdraw_amount,
+    require(address(this).balance >= withdraw_amount,
             "Insufficient balance in faucet for withdrawal request");
 
     // Send the amount to the address that requested it
     msg.sender.transfer(withdraw_amount);
-    emit Withdrawal(msg.sender, withdraw_amount);
+    //emit Withdrawal(msg.sender, withdraw_amount);
   }
   // Accept any incoming amount
   function () public payable {
-    emit Deposit(msg.sender, msg.value);
+    //emit Deposit(msg.sender, msg.value);
   }
 }
